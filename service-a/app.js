@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 8080
-const serviceName = process.env.SERVICE_NAME || 'service-a.jaeger-operator'
+const serviceName = process.env.SERVICE_NAME || 'service-a'
 
 // Initialize the Tracer
 const tracer = initTracer(serviceName)
