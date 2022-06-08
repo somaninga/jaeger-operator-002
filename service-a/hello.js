@@ -9,7 +9,7 @@ const sayHello = async (req, res) => {
   // simulate a slow request every 3 requests
   span.log({ event: 'name', message: `this is a log message for name ${name}` })
   span.setBaggageItem('my-baggage', name)
-  const response = await formatGreetingRemote(name, span);
+  const response = await formatGreetingRemote(name, span)
   span.setTag('response', response)
   span.finish()
   res.send(response)

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-a
+  annotations:
+    "sidecar.jaegertracing.io/inject": "true"
+  namespace: observability
+  labels:
+    app: service-a
+spec:
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: service-a
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: service-a
+    spec:
+      containers:
+        - image: somaningp/jaeger-operator-002_service-a:latest
+          name: service-a
+          imagePullPolicy: Always    
+          ports:
+            - containerPort: 8080
+              name: service-a
+              protocol: TCP
+          resources:
+            limits:
+              memory: "700Mi"
+              cpu: "400m"
+            requests:
+              memory: "500Mi"
+              cpu: "300m"
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: service-a
+    namespace: observability
+    labels:
+        app: service-a
+spec:
+    selector:
+        app: service-a
+    type: ClusterIP
+    ports:
+        - protocol: TCP
+          port: 8080
+          name: service-a
