@@ -27,7 +27,7 @@ function formatGreeting(name, parent) {
 const bent = require('bent')
 
 const formatGreetingRemote = async (name, span) => {
-  const service = process.env.SERVICE_FORMATTER || 'service-b.jaeger-operator'
+  const service = process.env.SERVICE_FORMATTER || 'service-b.observability'
   const servicePort = process.env.SERVICE_FORMATTER_PORT || '8081'
   const url = `http://${service}:${servicePort}/formatGreeting?name=${name}`
   const headers = {}
